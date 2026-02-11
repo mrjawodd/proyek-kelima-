@@ -22,12 +22,14 @@ def game_utama():
     pilihan = input("Pilih jalurmu (ketik 'Lembah Coding' atau 'Gunung Bug'): ").strip().lower()
 
     def battle(enemy_name, enemy_hp):
-        player_hp = 20
+        max_player_hp = 20
+        player_hp = max_player_hp
+        rations = 2
         slow_print(f"Pertarungan dimulai melawan {enemy_name}!")
         defending = False
         while enemy_hp > 0 and player_hp > 0:
-            slow_print(f"HP kamu: {player_hp} | HP {enemy_name}: {enemy_hp}")
-            action = input("Pilih tindakan (attack/defend/flee): ").strip().lower()
+            slow_print(f"HP kamu: {player_hp}/{max_player_hp} | HP {enemy_name}: {enemy_hp} | Makanan tersisa: {rations}")
+            action = input("Pilih tindakan (attack/defend/flee/eat atau makan): ").strip().lower()
             if action == "attack":
                 dmg = random.randint(4, 8)
                 enemy_hp -= dmg
@@ -43,6 +45,17 @@ def game_utama():
                 else:
                     slow_print("Gagal kabur! Musuh menyerang kesempatan itu.")
                     defending = False
+            elif action == "eat" or action == "makan":
+                if rations > 0:
+                    heal = random.randint(4, 8)
+                    old_hp = player_hp
+                    player_hp = min(max_player_hp, player_hp + heal)
+                    rations -= 1
+                    slow_print(f"Kau makan dan memulihkan {player_hp - old_hp} HP. Makanan tersisa: {rations}.")
+                    defending = False
+                else:
+                    slow_print("Kau tidak punya makanan lagi!")
+                    defending = False
             else:
                 slow_print("Pilihan tidak valid — kesempatan terbuka untuk musuh.")
                 defending = False
@@ -55,7 +68,7 @@ def game_utama():
                 slow_print(f"{enemy_name} menyerang dan memberi {enemy_dmg} damage.")
 
         if player_hp > 0:
-            slow_print(f"Kau menang melawan {enemy_name}!")
+            slow_print(f"Kau menang melawan {enemy_name}! (Sisa HP: {player_hp})")
             return True, player_hp
         else:
             slow_print("Kau kalah dalam pertarungan...")
