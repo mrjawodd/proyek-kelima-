@@ -75,6 +75,14 @@ def game_utama():
     player_hp = max_player_hp
     rations = 2
 
+    # Opsi istirahat sebelum memulai perjalanan
+    pre_rest = input("Ingin istirahat di rumah warga sebelum berangkat? (y/n): ").strip().lower()
+    if pre_rest == "y" or pre_rest == "ya":
+        slow_print("Kau beristirahat di rumah warga. HP pulih penuh dan makanan ditambah.")
+        player_hp = max_player_hp
+        rations += 2
+        slow_print(f"HPmu pulih menjadi {player_hp}. Makanan sekarang {rations}.")
+
     if pilihan == "lembah coding" or pilihan == "1":
         slow_print("Kau memasuki Lembah Coding. Kabut berisi baris-baris kode bergelung.")
         slow_print("Tiba-tiba sekelompok 'Bug Thief' muncul dan mencoba mengacak program desa.")
